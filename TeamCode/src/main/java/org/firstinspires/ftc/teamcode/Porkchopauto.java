@@ -56,7 +56,6 @@ public class Porkchopauto extends LinearOpMode {
             motorFrontRight.setPower(0.8 * frontRightPower);
             motorBackRight.setPower(0.8 * backRightPower);
 
-
             //arm motor
 //            double armPower = 0.01;
 //            arm.setPower(armPower);
@@ -73,7 +72,7 @@ public class Porkchopauto extends LinearOpMode {
 
             int ticks = 0;
 
-            while (gamepad2.dpad_down) {
+            if (gamepad2.dpad_down) {
                 ++ticks;
                 //arm.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
                 arm.setTargetPosition(ticks);
@@ -86,7 +85,7 @@ public class Porkchopauto extends LinearOpMode {
                 }
             }
 
-            while (gamepad2.dpad_up) {
+            if (gamepad2.dpad_up) {
                 --ticks;
                 //arm.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
                 arm.setTargetPosition(ticks);
@@ -105,12 +104,12 @@ public class Porkchopauto extends LinearOpMode {
             double clawPower = 0;
             intake.setPower(clawPower);
 
-            while (gamepad2.b) {
+            if (gamepad2.b) {
                 clawPower = 0.69;
                 intake.setPower(clawPower);
             }
 
-            while (gamepad2.a) {
+            if (gamepad2.a) {
                 clawPower = -0.69;
                 intake.setPower(clawPower);
             }
@@ -120,13 +119,13 @@ public class Porkchopauto extends LinearOpMode {
             double servoPower = 0.0;
             wheel.setPower(servoPower);
 
-            while (gamepad2.y) {
+            if (gamepad2.y) {
                 servoPower = 1;
                 wheel.setPower(servoPower);
                 TelemetryUpdate();
             }
 
-            while (gamepad2.x){
+            if (gamepad2.x){
                 servoPower = -1;
                 wheel.setPower(servoPower);
                 TelemetryUpdate();

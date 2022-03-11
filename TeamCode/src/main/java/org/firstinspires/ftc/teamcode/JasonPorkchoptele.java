@@ -46,10 +46,10 @@ public class JasonPorkchoptele extends LinearOpMode {
             double x = gamepad1.left_stick_x; // Controls strafe; leftward/rightward
             double rx = gamepad1.right_stick_x; // right is turn right, left is turn left
 
-            double frontLeftPower = (-rx + y + x);
-            double backLeftPower = (-rx + y - x);
-            double frontRightPower = (rx + y - x);
-            double backRightPower = -(rx + y + x);
+            double frontLeftPower = -(-rx + y - x);
+            double backLeftPower = -(-rx + y + x);
+            double frontRightPower = -(rx + y + x);
+            double backRightPower = (rx + y - x);
 
             motorFrontLeft.setPower(0.81 * frontLeftPower);
             motorBackLeft.setPower(0.81 * backLeftPower);
