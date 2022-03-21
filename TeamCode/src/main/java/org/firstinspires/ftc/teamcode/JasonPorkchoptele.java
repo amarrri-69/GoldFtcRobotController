@@ -21,7 +21,6 @@ public class JasonPorkchoptele extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        // Make sure ID match configuration
         motorFrontLeft = hardwareMap.dcMotor.get("frontLeft");
         motorBackLeft = hardwareMap.dcMotor.get("backLeft");
         motorFrontRight = hardwareMap.dcMotor.get("frontRight");
@@ -58,47 +57,18 @@ public class JasonPorkchoptele extends LinearOpMode {
 
 
             //arm motor
-            double armPower = 0.01;
+            double armPower = -0.01;
             arm.setPower(armPower);
 
             if (gamepad2.dpad_down) {
-                armPower = -1;
+                armPower = 1;
                 arm.setPower(armPower);
             }
 
             if (gamepad2.dpad_up) {
-                armPower = 1;
+                armPower = -1;
                 arm.setPower(armPower);
             }
-//
-//            int ticks = 0;
-//
-//            if (gamepad2.dpad_down) {
-//                ++ticks;
-//                //arm.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-//                arm.setTargetPosition(ticks);
-//                arm.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-//
-//                if (ticks > 0 && ticks < 180) {
-//                    arm.setPower(1);
-//                } else {
-//                    arm.setPower(0);
-//                }
-//            }
-//
-//            if (gamepad2.dpad_up) {
-//                --ticks;
-//                //arm.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-//                arm.setTargetPosition(ticks);
-//                arm.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-//
-//                if (ticks > 0 && ticks < 180) {
-//                    arm.setPower(-1);
-//                } else {
-//                    arm.setPower(0);
-//                }
-//            }
-
 
 
 //             //claw claw servo
