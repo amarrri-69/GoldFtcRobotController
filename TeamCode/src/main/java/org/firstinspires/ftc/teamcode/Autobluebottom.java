@@ -1,15 +1,14 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.CRServo;
-import com.qualcomm.robotcore.hardware.ColorSensor;
 
 
-@Autonomous(name = "Auto Blue Bottom")
+@Autonomous (name = "Simple Blue Bottom")
 public class Autobluebottom extends LinearOpMode {
 
     int level;
@@ -19,57 +18,69 @@ public class Autobluebottom extends LinearOpMode {
     DcMotorEx motorFrontRight;
     DcMotorEx motorBackRight;
 
+    CRServo wheel;
+    DcMotorEx intake;
     DcMotorEx arm;
 
-    DcMotorEx intake;
 
-    CRServo wheel;
-
-    ColorSensor duck;
-    ColorSensor duck2;
-
-    final double     TICKS   = 537.7 ;
-    final double     GEAR   = 1;
-    final double     WHEEL   = 3.77953; //diameter
+    final double     TICKS   = 537.7 ;//TICKS_PER_MOTOR_ROTATION
+    final double     GEAR   = 1; //gears??
+    final double     WHEEL   = 3.77953; //WHEEL_DIAMETER_INCHES
     final double     TICKS_PER_INCH  = (TICKS * GEAR)/(WHEEL * 3.1415);
-
-    boolean blue1;
-    boolean blue2;
-    boolean yellow1;
-    boolean yellow2;
 
     @Override
     public void runOpMode() throws InterruptedException {
-        motorFrontLeft = hardwareMap.get(DcMotorEx.class, "frontLeft");
-        motorBackLeft = hardwareMap.get(DcMotorEx.class, "backLeft");
-        motorFrontRight = hardwareMap.get(DcMotorEx.class, "frontRight");
+        //frontleft = frontright
+        //frontright = backleft
+        //backleft = frontleft
+        //backright = backright
+
+        motorFrontLeft = hardwareMap.get(DcMotorEx.class,"frontRight");
+        motorBackLeft = hardwareMap.get(DcMotorEx.class,"frontLeft");
+        motorFrontRight = hardwareMap.get(DcMotorEx.class,"backLeft");
         motorBackRight = hardwareMap.get(DcMotorEx.class,"backRight");
 
-        arm = hardwareMap.get(DcMotorEx.class, "arm");
-
-        intake = hardwareMap.get(DcMotorEx.class, "intake");
+        intake = hardwareMap.get(DcMotorEx.class,"claw");
 
         wheel = hardwareMap.get(CRServo.class, "carousel");
-
-        duck = hardwareMap.get(ColorSensor.class, "duck");
-        duck2 = hardwareMap.get(ColorSensor.class, "duck2");
+        arm = hardwareMap.get(DcMotorEx.class,"arm");
 
         motorFrontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorFrontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorBackLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorBackRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        intake.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
         motorFrontRight.setDirection(DcMotorSimple.Direction.REVERSE);
         motorBackRight.setDirection(DcMotorSimple.Direction.REVERSE);
+
 
         waitForStart();
         if (isStopRequested()) return;
 
         if (opModeIsActive()) {
 
+            encodersStrafeLeft(9, 0.1);
+            encodersForward(22, 0.1);
+            carousel(1, 4000);
+            encodersStrafeLeft(26, 0.1);
+            encodersBackward(13, 0.1);
+            intakePower(0.7, 1200);
+            encodersForward(18, 0.1);
+
+            telemetry.update();
+
+            /*
+
+            TelemetryUpdate();
+            encodersBackward(8, 0.1);
+            encodersStrafeRight(27, 0.1);
+            carousel(1, 4000);
+            encodersBackward(45, 0.1);
+            IntakePower(0.65, 900);
+            encodersForward(24, 0.1);
+            encodersStrafeRight(9, 0.1);
+
+             */
         }
     }
 
@@ -84,10 +95,10 @@ public class Autobluebottom extends LinearOpMode {
         motorFrontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         motorBackRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        motorFrontRight.setPower(power); //everything is reversed because of the rotation of our gears - Carter
         motorFrontLeft.setPower(power);
-        motorBackRight.setPower(power);
+        motorFrontRight.setPower(power);
         motorBackLeft.setPower(power);
+        motorBackRight.setPower(power);
 
         while (motorFrontLeft.isBusy() && motorFrontRight.isBusy() && motorBackLeft.isBusy() && motorBackRight.isBusy()) { }
 
@@ -120,7 +131,7 @@ public class Autobluebottom extends LinearOpMode {
         motorFrontLeft.setPower(0);
     }
 
-    public void encodersStrafeL(int inches, double power) { //left strafe
+    public void encodersStrafeLeft (int inches, double power) {
         motorFrontLeft.setTargetPosition(motorFrontLeft.getCurrentPosition() +(int)(-inches*TICKS_PER_INCH));
         motorFrontRight.setTargetPosition(motorFrontRight.getCurrentPosition() +(int)(-inches*TICKS_PER_INCH));
         motorBackRight.setTargetPosition(motorBackRight.getCurrentPosition() +(int)(inches*TICKS_PER_INCH));
@@ -143,7 +154,7 @@ public class Autobluebottom extends LinearOpMode {
         motorFrontLeft.setPower(0);
     }
 
-    public void encodersStrafeR(int inches, double power) { //strafe right into my heart
+    public void encodersStrafeRight (int inches, double power) {
         motorFrontLeft.setTargetPosition(motorFrontLeft.getCurrentPosition() +(int)(inches*TICKS_PER_INCH));
         motorFrontRight.setTargetPosition(motorFrontRight.getCurrentPosition() +(int)(inches*TICKS_PER_INCH));
         motorBackRight.setTargetPosition(motorBackRight.getCurrentPosition() +(int)(-inches*TICKS_PER_INCH));
@@ -166,7 +177,7 @@ public class Autobluebottom extends LinearOpMode {
         motorFrontLeft.setPower(0);
     }
 
-    public void encodersTurnL(int inches, double power) {
+    public void encodersTurnLeft (int inches, double power) {
         motorFrontLeft.setTargetPosition(motorFrontLeft.getCurrentPosition() +(int)(inches*TICKS_PER_INCH));
         motorFrontRight.setTargetPosition(motorFrontRight.getCurrentPosition() +(int)(-inches*TICKS_PER_INCH));
         motorBackRight.setTargetPosition(motorBackRight.getCurrentPosition() +(int)(-inches*TICKS_PER_INCH));
@@ -189,7 +200,7 @@ public class Autobluebottom extends LinearOpMode {
         motorFrontLeft.setPower(0);
     }
 
-    public void encodersTurnR(int inches, double power) {
+    public void encodersTurnRight (int inches, double power) {
         motorFrontLeft.setTargetPosition(motorFrontLeft.getCurrentPosition() +(int)(-inches*TICKS_PER_INCH));
         motorFrontRight.setTargetPosition(motorFrontRight.getCurrentPosition() +(int)(inches*TICKS_PER_INCH));
         motorBackRight.setTargetPosition(motorBackRight.getCurrentPosition() +(int)(inches*TICKS_PER_INCH));
@@ -213,61 +224,29 @@ public class Autobluebottom extends LinearOpMode {
         motorFrontLeft.setPower(0);
     }
 
-    public void encoderarmPower(int ticks, double power) {
-        arm.setTargetPosition(-80);
-        arm.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-        arm.setPower(1);
+    public void carousel(double power, int time) {
 
-        while (arm.isBusy()) {
-        }
-
-        arm.setPower(0);
+        wheel.setPower(power);
+        sleep(time);
+        wheel.setPower(0);
     }
 
-    public void encoderIntakePower (int ticks, double power) {
-        intake.setTargetPosition(-80);
-        intake.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-        intake.setVelocity(1000);
-
-        while(intake.isBusy()){ }
-
-        intake.setVelocity(0);
+    public void intakePower (double power, int time) {
+        intake.setPower(power);
+        sleep(time);
+        intake.setPower(0);
     }
 
-    public int inchesToTicks(int inches) {
-        double tickPerInch = 360 / (3.77 * 3.14);
-        return (int) (inches * tickPerInch);
-        //inches; //312 RPM, diameter: 3.77 inches
-    }
-
-    public void stopDriving() {
-        motorFrontRight.setPower(0);
-        motorFrontLeft.setPower(0);
-        motorBackRight.setPower(0);
-        motorBackLeft.setPower(0);
-        arm.setPower(0);
-    }
-
-    public void Stop() {
+    public void stopDriving() { //stop!!!
         motorFrontRight.setPower(0);
         motorFrontLeft.setPower(0);
         motorBackRight.setPower(0);
         motorBackLeft.setPower(0);
     }
-
-//    public void carousel(double power) {
-//        wheel.setPower(power);
-//    }
 
     public void TelemetryUpdate() {
         telemetry.addData("Status", "Running");
-        telemetry.addData("Front Left Motor Power", motorFrontLeft.getPower());
-        telemetry.addData("Front Right Motor Power", motorFrontRight.getPower());
-        telemetry.addData("Back Left Motor Power", motorBackLeft.getPower());
-        telemetry.addData("Back Right Motor Power", motorBackRight.getPower());
-        //telemetry.addData("Servo Power", wheel.getPower());
-        //telemetry.addData("Arm Power", arm.getPower());
-        //telemetry.addData("Claw Power", Claw.getPosition());
-        telemetry.update();
+        telemetry.addData("Level", level);
     }
+
 }
