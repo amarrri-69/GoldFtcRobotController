@@ -50,54 +50,58 @@ public class JasonPorkchoptele extends LinearOpMode {
             double frontRightPower = -(rx + y + x);
             double backRightPower = (rx + y - x);
 
-            motorFrontLeft.setPower(0.81 * frontLeftPower);
-            motorBackLeft.setPower(0.81 * backLeftPower);
-            motorFrontRight.setPower(0.81 * frontRightPower);
-            motorBackRight.setPower(0.81 * backRightPower);
+            motorFrontLeft.setPower(0.75 * frontLeftPower);
+            motorBackLeft.setPower(0.75 * backLeftPower);
+            motorFrontRight.setPower(0.75 * frontRightPower);
+            motorBackRight.setPower(0.75 * backRightPower);
 
 
             //arm motor
-            double armPower = -0.01;
-            arm.setPower(armPower);
+            double armPower = 0.01;
+
+            if (gamepad2.right_bumper) {
+                arm.setPower(armPower);
+            } else {
+                arm.setPower(-armPower);
+            }
 
             if (gamepad2.dpad_down) {
-                armPower = 1;
-                arm.setPower(armPower);
+                arm.setPower(0.87);
             }
 
             if (gamepad2.dpad_up) {
-                armPower = -1;
-                arm.setPower(armPower);
+                arm.setPower(-0.87);
             }
 
 
-//             //claw claw servo
+            //intake motor
             double clawPower = 0;
             claw.setPower(clawPower);
 
             if (gamepad2.b) {
-                clawPower = 0.4;
+                clawPower = 0.69;
                 claw.setPower(clawPower);
             }
 
             if (gamepad2.a) {
-                clawPower = -0.4;
+                clawPower = -0.69;
                 claw.setPower(clawPower);
             }
 
 
             //continuous servo
+            //expansion hub servo port 5 broken
             double servoPower = 0.0;
             wheel.setPower(servoPower);
 
-            if (gamepad2.y) {
-                servoPower = 1;
+            while (gamepad2.y) {
+                servoPower = 0.7;
                 wheel.setPower(servoPower);
                 TelemetryUpdate();
             }
 
-            if (gamepad2.x){
-                servoPower = -1;
+            while (gamepad2.x){
+                servoPower = -0.7;
                 wheel.setPower(servoPower);
                 TelemetryUpdate();
             }
