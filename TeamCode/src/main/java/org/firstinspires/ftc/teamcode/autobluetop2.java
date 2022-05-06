@@ -10,8 +10,8 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 //import com.qualcomm.robotcore.hardware.VoltageSensor;
 
 
-@Autonomous (name = "simple blue top")
-public class Autobluetop extends LinearOpMode {
+@Autonomous (name = "simple blue top 2, the real blue top")
+public class autobluetop2 extends LinearOpMode {
 
     int level;
 
@@ -79,21 +79,20 @@ public class Autobluetop extends LinearOpMode {
 
 
             TelemetryUpdate();
-            encodersForward(40, 0.15);
-            encodersTurnRight(20, 0.15);
+            encodersForward(45, 0.2);
+            encodersTurnRight(22, 0.2);
             encoderarm(30, 0.35);
             encodersForward(6, 0.1);
-            encoderarm(121, 0.41);
-
-            IntakePower(0, 100);
-            IntakePower(0.63, 900);
+            encoderarm(125, 0.41);
+            IntakePower(0.51, 900);
 
             encoderarm(-59, 0.46);
-            encodersBackward(3, 0.15);
-            encodersTurnLeft(41, 0.15);
+            encodersBackward(5, 0.15);
+            encodersTurnLeft(43, 0.18);
             encodersForward(3, 0.15);
-            encodersStrafeRight(24, 0.15);
-            encodersBackward(55,0.32);
+            encodersStrafeRight(24, 0.18);
+            encodersBackward(75,0.7);
+
             // encodersTurnRight(1, 0.13);
             // encodersStrafeLeft(30, 0.3);
         }
