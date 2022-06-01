@@ -63,39 +63,9 @@ public class Autobluetop extends LinearOpMode {
 
         if (opModeIsActive()) {
 
-            /*
-            if (v.getVoltage() >= 13.5) {
-                v_scale = 1;
-            }
-            else if (v.getVoltage() >= 13 && v.getVoltage() < 13.5) {
-                v_scale = 1.1;
-            }
+            encoderarm(30, 0.4);
+            encodersStrafeLeft(40, 0.1);
 
-            else if (v.getVoltage() < 13 && v.getVoltage() > 12.5) {
-                v_scale = 1.15;
-            }
-
-             */
-
-
-            TelemetryUpdate();
-            encodersForward(40, 0.15);
-            encodersTurnRight(20, 0.15);
-            encoderarm(30, 0.35);
-            encodersForward(6, 0.1);
-            encoderarm(121, 0.41);
-
-            IntakePower(0, 100);
-            IntakePower(0.63, 900);
-
-            encoderarm(-59, 0.46);
-            encodersBackward(3, 0.15);
-            encodersTurnLeft(41, 0.15);
-            encodersForward(3, 0.15);
-            encodersStrafeRight(24, 0.15);
-            encodersBackward(55,0.32);
-            // encodersTurnRight(1, 0.13);
-            // encodersStrafeLeft(30, 0.3);
         }
     }
 
@@ -270,7 +240,7 @@ public class Autobluetop extends LinearOpMode {
     }
     public void forward(double power) {
         motorFrontLeft.setPower(-power);
-        motorBackRight.setPower(-power);
+        motorBackRight.setPower(power);
         motorFrontRight.setPower(-power);
         motorBackLeft.setPower(-power);
     }

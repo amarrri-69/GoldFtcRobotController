@@ -59,13 +59,14 @@ public class Autobluebottom extends LinearOpMode {
 
         if (opModeIsActive()) {
 
-            encodersStrafeLeft(9, 0.1);
+            encodersStrafeLeft(7, 0.1);
             encodersForward(22, 0.1);
             carousel(1, 4000);
             encodersStrafeLeft(26, 0.1);
             encodersBackward(13, 0.1);
             intakePower(0.7, 1200);
-            encodersForward(18, 0.1);
+            encodersForward(16, 0.1);
+            encodersTurnLeft(4, 0.1);
 
             telemetry.update();
 
